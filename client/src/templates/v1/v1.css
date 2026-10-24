@@ -1,0 +1,95 @@
+/* Design v1 — scoped under .v1-root so it never leaks into other templates. */
+.v1-root {
+  --v1-paper: #f7f2e9;
+  --v1-paper-deep: #efe6d6;
+  --v1-ink: #26302a;
+  --v1-ink-soft: #5d675f;
+  --v1-sage: #8a9a84;
+  --v1-gold: #b08d57;
+  --v1-gold-soft: #cdb489;
+  --v1-wax: #7b2230;
+  --v1-night: #1c2420;
+  --v1-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  font-family: 'Cormorant Garamond', 'Cormorant', Georgia, serif;
+  /* Cormorant's old-style "1" reads as "I" — use lining figures */
+  font-variant-numeric: lining-nums;
+  color: var(--v1-ink);
+  background: var(--v1-night);
+  -webkit-font-smoothing: antialiased;
+}
+
+.v1-paper {
+  background-color: var(--v1-paper);
+  background-image: var(--v1-noise), radial-gradient(120% 80% at 50% 0%, #fbf8f2 0%, transparent 60%);
+}
+
+.v1-night {
+  background-color: var(--v1-night);
+  background-image: var(--v1-noise), radial-gradient(100% 60% at 50% 0%, #26302a 0%, transparent 70%);
+  color: var(--v1-paper);
+}
+
+.v1-script {
+  font-family: 'Pinyon Script', cursive;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.v1-caps {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.v1-root ::selection {
+  background: var(--v1-gold-soft);
+  color: var(--v1-ink);
+}
+
+/* Underlined inputs for the RSVP form */
+.v1-input {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--v1-paper) 30%, transparent);
+  padding: 0.6rem 0;
+  font-size: 1.25rem;
+  color: var(--v1-paper);
+  outline: none;
+  transition: border-color 0.3s;
+}
+.v1-input::placeholder {
+  color: color-mix(in oklab, var(--v1-paper) 35%, transparent);
+  font-style: italic;
+}
+.v1-input:focus {
+  border-bottom-color: var(--v1-gold);
+}
+
+@keyframes v1-breathe {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+.v1-breathe {
+  animation: v1-breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes v1-scroll-cue {
+  0% { transform: scaleY(0); transform-origin: top; }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+.v1-scroll-cue {
+  animation: v1-scroll-cue 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v1-breathe,
+  .v1-scroll-cue {
+    animation: none;
+  }
+}

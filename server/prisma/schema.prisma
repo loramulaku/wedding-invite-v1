@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Invite {
+  id        String   @id @default(cuid())
+  code      String   @unique // personal code, e.g. "a3f9k2"
+  template  String // "v1", "v2", ...
+  brideName String
+  groomName String
+  date      DateTime
+  venue     String
+  photos    Json?
+  rsvps     Rsvp[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Rsvp {
+  id        String   @id @default(cuid())
+  inviteId  String
+  invite    Invite   @relation(fields: [inviteId], references: [id], onDelete: Cascade)
+  name      String
+  attending Boolean
+  guests    Int
+  message   String?  @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([inviteId])
+}
